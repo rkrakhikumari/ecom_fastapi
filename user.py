@@ -71,9 +71,11 @@ def get_current_user(db: db_dependency, token: str=Depends(oauth2_bearer)):
         email : str = payload.get('sub')
         role : str = payload.get('role')
         if email is None or role is None:
-            raise HTTPException(status_code = 404, detail="user not found")
+            raise HTTPException(status_code = status.HTTP_401_UNAUTHORIZED, detail = "Could not validate token")
+
     except JWTError:
-        raise HTTPException(status_code = status.HTTP_404_UNAUTHORIZED, detail = "could not valid token")
+        raise HTTPException(status_code = status.HTTP_401_UNAUTHORIZED, detail = "Could not validate token")
+
     
     user = db.query(User).filter(User.email == email).first()
     if user is None:
