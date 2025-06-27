@@ -1,6 +1,7 @@
 from sqlalchemy import Column, String, Integer, Boolean, DateTime, Float, ForeignKey
 from sqlalchemy.orm import relationship
 
+
 from database import Base
 
 
@@ -22,6 +23,7 @@ class User(Base):
 class Product(Base):
     __tablename__ ='products'
     id = Column(Integer, primary_key=True)
+    name = Column(String, nullable=False)
     category = Column(String, nullable= False)
     image_url = Column(String)
     price = Column(Float,nullable=False)
@@ -30,3 +32,24 @@ class Product(Base):
 
     vendor = relationship("User")
 
+
+class CartItem(Base):
+    __tablename__='cartitem'
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('users.id'))
+    product_id = Column(Integer, ForeignKey('products.id'))
+    quantity = Column(Integer, default=1)
+
+    product = relationship("Product")
+    user = relationship("User")
+
+
+
+class Order(Base):
+    __tablename__ = 'orders'
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('users.id'))
+    status = Column(String, default='pending')
+    total_amount = Column(Float, )
+
+    user = relationship("User")

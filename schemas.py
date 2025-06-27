@@ -33,3 +33,9 @@ class UpdateProduct(BaseModel):
     price : float = None
     stock : str = None
     image_url : str = None
+
+
+
+class AddToCart(BaseModel):
+    product_id : int
+    quantity : int = 1
