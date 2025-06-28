@@ -27,7 +27,7 @@ class Product(Base):
     category = Column(String, nullable= False)
     image_url = Column(String)
     price = Column(Float,nullable=False)
-    stock = Column(String)
+    stock = Column(Integer,nullable=False)
     vendor_id = Column(Integer, ForeignKey('users.id'))
 
     vendor = relationship("User")
@@ -51,5 +51,17 @@ class Order(Base):
     user_id = Column(Integer, ForeignKey('users.id'))
     status = Column(String, default='pending')
     total_amount = Column(Float, )
+    payment_status = Column(String, default= 'pending')
 
     user = relationship("User")
+
+
+class OrderItem(Base):
+    __tablename__ = 'order_items'
+    id = Column(Integer, primary_key=True)
+    product_id = Column(Integer, ForeignKey('products.id'))
+    order_id = Column(Integer, ForeignKey('orders.id'))
+    quantity = Column(Integer, default=1)
+
+    product = relationship("Product")
+
