@@ -49,7 +49,10 @@ def get_all_orders(db: db_dependency, current_user: dict = Depends(require_admin
             "status": order.status,
             "payment_status": order.payment_status,
             "total_amount": order.total_amount
-        })
+        }
+        
+        
+        )
 
     return {"total_orders": len(order_list), "orders": order_list}
 
