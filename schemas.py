@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field
 
+
 class CreateUser(BaseModel):
     name : str = Field(min_length=3)
     email : str
@@ -23,7 +24,7 @@ class CreateProduct(BaseModel):
     name : str
     category : str
     price : float
-    stock : str
+    stock : int
     image_url : str
 
 
@@ -31,7 +32,7 @@ class UpdateProduct(BaseModel):
     name : str =None
     category : str =None
     price : float = None
-    stock : str = None
+    stock : int = None
     image_url : str = None
 
 
@@ -39,3 +40,20 @@ class UpdateProduct(BaseModel):
 class AddToCart(BaseModel):
     product_id : int
     quantity : int = 1
+
+
+
+class CreateOrder(BaseModel):
+    user_id : int
+    payment_mode : str = Field(default='COD')
+
+
+
+class UpdateOrderStatus(BaseModel):
+    status : str
+
+
+
+class UpdatePaymentStatus(BaseModel):
+    payment_status : str
+
